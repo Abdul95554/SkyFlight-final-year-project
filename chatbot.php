@@ -32,6 +32,8 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
+  
+
 
     body {
       background: url('img/mainBG.jpg') no-repeat center center fixed;
@@ -102,34 +104,9 @@
         header.classList.remove('scrolled');
       }
     });
-
-    // Simple chatbot demo logic (adjust if you use backend or real AI)
-    const form = document.getElementById('chat-form');
-    const input = document.getElementById('user-input');
-    const chat = document.getElementById('chat');
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const message = input.value.trim();
-      if (!message) return;
-
-      const userMsg = document.createElement('div');
-      userMsg.className = 'message sent flex justify-end';
-      userMsg.innerHTML = `<div class="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg max-w-xs">${message}</div>`;
-      chat.appendChild(userMsg);
-
-      // Simulate bot response
-      const botMsg = document.createElement('div');
-      botMsg.className = 'message received flex justify-start';
-      botMsg.innerHTML = `<div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-xs mt-2">Thank you for your question. We'll get back to you shortly.</div>`;
-      setTimeout(() => {
-        chat.appendChild(botMsg);
-        chat.scrollTop = chat.scrollHeight;
-      }, 600);
-
-      input.value = '';
-      chat.scrollTop = chat.scrollHeight;
-    });
+   
   </script>
+
+  <script src="chatbot.js"></script>
 </body>
 </html>

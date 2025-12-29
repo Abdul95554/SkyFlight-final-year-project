@@ -10,8 +10,8 @@ const icaoPrefixes = {
   Canada: "C"
 };
 
-// Initialize Leaflet map
-const map = L.map("map").setView([30, 70], 4); // Centered on South Asia
+// Leaflet map initialize
+const map = L.map("map").setView([30, 70], 4);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "&copy; OpenStreetMap contributors"
 }).addTo(map);
@@ -27,7 +27,7 @@ filterButton.addEventListener("click", async () => {
     return;
   }
 
-  // Remove old markers
+  // Purane markers remove karna
   markers.forEach(marker => map.removeLayer(marker));
   markers = [];
 
@@ -36,27 +36,36 @@ filterButton.addEventListener("click", async () => {
     const data = await response.json();
     const flights = data.states || [];
 
-    const filteredFlights = flights.filter(f => f[2] && f[2].toLowerCase() === selectedCountry.toLowerCase());
+    // ICAO prefix ke basis pe filter
+    const filteredFlights = flights.filter(f => f[1] && f[1].startsWith(icaoPrefix));
 
     if (filteredFlights.length === 0) {
       alert(`No live flights found for ${selectedCountry}`);
       return;
     }
 
+    // Markers add karna
     filteredFlights.forEach(f => {
       const lat = f[6];
       const lon = f[5];
       const callsign = f[1] || "Unknown";
 
-      if (lat && lon) {
+      if (lat !== null && lon !== null) {
         const marker = L.marker([lat, lon])
           .addTo(map)
-          .bindPopup(`<strong>${callsign}</strong><br>${f[2] || "Unknown origin"}`);
+          .bindPopup(`<strong>${callsign}</strong><br>Origin: ${f[2] || "Unknown"}`);
         markers.push(marker);
       }
     });
+
+    // Map ko auto zoom aur center karna
+    if (markers.length > 0) {
+      const group = L.featureGroup(markers);
+      map.fitBounds(group.getBounds());
+    }
+
   } catch (err) {
     console.error("OpenSky API error:", err);
-    alert("Failed to load flights. Try again.");
+    alert("Failed to load flights. Try again later.");
   }
 });

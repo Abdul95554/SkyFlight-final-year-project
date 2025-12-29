@@ -1,55 +1,54 @@
-// Chatbot Responses
-const chatbotResponses = {
-    default: "I'm sorry, I didn't understand that. Please ask something about flights, bookings, or airline services.",
-    greetings: "Hello! How can I assist you today?",
-    booking: "You can book tickets on our website or mobile app. Let me know if you need help with it.",
-    baggage: "Our baggage policy allows 1 carry-on bag and 1 checked bag. Additional baggage fees may apply.",
-    flightStatus: "To check your flight status, visit our flight status page or provide your flight number here.",
-    cancel: "You can cancel your flight on our website under 'Manage My Booking'. Cancellation fees may apply.",
-  };
-  
-  // Chat Functionality
-  const chatForm = document.getElementById("chat-form");
-  const chatContainer = document.getElementById("chat");
-  const userInput = document.getElementById("user-input");
-  
-  function addMessage(message, type = "received") {
-    const messageEl = document.createElement("div");
-    messageEl.className = `message flex items-start space-x-2 ${type}`;
-    messageEl.innerHTML = `
-      <div class="bg-${type === "sent" ? "blue-800" : "gray-300"} text-${type === "sent" ? "white" : "black"} p-3 rounded-lg max-w-md">
-        ${message}
-      </div>
-    `;
-    chatContainer.appendChild(messageEl);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+const chatForm = document.getElementById("chat-form");
+const chatContainer = document.getElementById("chat");
+const userInput = document.getElementById("user-input");
+
+function addMessage(message, type) {
+  const msg = document.createElement("div");
+  msg.className = `message flex ${type === "sent" ? "justify-end" : "justify-start"}`;
+  msg.innerHTML = `
+    <div class="${type === "sent"
+      ? "bg-blue-600 text-white"
+      : "bg-gray-300 text-black"} px-4 py-2 rounded-lg max-w-md">
+      ${message}
+    </div>
+  `;
+  chatContainer.appendChild(msg);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function getChatbotResponse(input) {
+  input = input.toLowerCase();
+
+  if (input.includes("hi") || input.includes("hello")) {
+    return "Hello 👋 How can I help you today?";
   }
-  
-  function getChatbotResponse(input) {
-    input = input.toLowerCase();
-    if (input.includes("hello") || input.includes("hi")) {
-      return chatbotResponses.greetings;
-    } else if (input.includes("book") || input.includes("ticket")) {
-      return chatbotResponses.booking;
-    } else if (input.includes("baggage") || input.includes("luggage")) {
-      return chatbotResponses.baggage;
-    } else if (input.includes("flight status") || input.includes("status")) {
-      return chatbotResponses.flightStatus;
-    } else if (input.includes("cancel") || input.includes("cancellation")) {
-      return chatbotResponses.cancel;
-    } else {
-      return chatbotResponses.default;
-    }
+  if (input.includes("book") || input.includes("ticket")) {
+    return "You can book tickets from the Book Tickets page ✈️";
   }
-  
-  chatForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const userMessage = userInput.value.trim();
-    if (userMessage) {
-      addMessage(userMessage, "sent");
-      const chatbotMessage = getChatbotResponse(userMessage);
-      setTimeout(() => addMessage(chatbotMessage, "received"), 500);
-      userInput.value = "";
-    }
-  });
-  
+  if (input.includes("baggage") || input.includes("luggage")) {
+    return "Each passenger can carry one hand bag and one checked bag.";
+  }
+  if (input.includes("status")) {
+    return "Please provide your flight number to check flight status.";
+  }
+  if (input.includes("cancel")) {
+    return "You can cancel your booking from Manage Booking section.";
+  }
+
+  return "Sorry 🤔 I can answer questions about flights, booking, baggage, or cancellation.";
+}
+
+chatForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const message = userInput.value.trim();
+  if (!message) return;
+
+  addMessage(message, "sent");
+
+  setTimeout(() => {
+    const reply = getChatbotResponse(message);
+    addMessage(reply, "received");
+  }, 500);
+
+  userInput.value = "";
+});
