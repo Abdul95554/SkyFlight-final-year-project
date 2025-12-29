@@ -35,7 +35,7 @@
     }
   </style>
 </head>
-<body class="text-gray-800 relative">
+<body class="bg-slate-950 text-gray-200 relative">
 
   <!-- Transparent Header -->
   <header id="header" class="header fixed top-0 left-0 w-full py-4 z-50">
@@ -53,23 +53,30 @@
 
   <!-- Hero Section -->
   <section class="hero flex items-center justify-center relative">
-    <div class="absolute inset-0 bg-black opacity-50"></div>
-    <div class="relative z-10 text-center text-white px-6">
-      <h1 class="text-6xl font-extrabold mb-6 text-shadow">Welcome Skyflight</h1>
-      <p class="text-xl mb-8 text-shadow">
-        Your trusted partner for seamless flight booking and travel experiences. Explore new destinations today!
-      </p>
-      <a href="services.php" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg text-lg font-semibold text-white">
-        Explore Services
-      </a>
-    </div>
-  </section>
+  <div class="hero-content text-center text-white px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-shadow">
+      Welcome to SkyFlight
+    </h1>
+
+    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+      Your trusted partner for seamless flight booking and travel experiences.
+      Explore new destinations today!
+    </p>
+
+    <a href="services.php"
+       class="inline-block bg-blue-600 hover:bg-blue-700 transition px-8 py-4 rounded-md text-lg font-semibold shadow-lg">
+      Explore Services
+    </a>
+  </div>
+</section>
+
 
   <!-- Services Section -->
-  <section id="services" class="py-16 bg-gray-100">
+ <section id="services" class="py-16 bg-slate-900">
+
     <div class="container mx-auto">
-      <h2 class="text-4xl font-bold text-blue-900 text-center mb-6">Our Services</h2>
-      <p class="text-lg text-gray-700 text-center mb-12">
+      <h2 class="text-4xl font-bold text-white text-center mb-6">Our Services</h2>
+      <p class="text-lg text-white text-center mb-12">
         At skyflight, we offer a range of services to make your travel experience smooth, stress-free, and enjoyable.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
